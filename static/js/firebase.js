@@ -23,7 +23,10 @@
     var int = 0
     setInterval(update, 1000);
     function update(){ 
-      val+=1;
+      val+=Math.random() * (100+0) +0;
+      if(val > 100){
+        val-=100;
+      } 
       progress(val);
       console.log(val);
       updateReport(val);
@@ -123,9 +126,23 @@
       }
   function updateReport(val){
     var len = myChart.data.datasets[0].data.length
-    myChart.data.datasets[0].data[len] = val;
-    myChart.data.labels[len] = "New";
-    myChart.update();
+    var d = new Date(); // for now
+    var h = d.getHours(); // => 9
+    var m = d.getMinutes(); // =>  30
+    var s = d.getSeconds(); // => 51
+    if(len>30){
+      myChart.data.datasets[0].data.shift();
+      myChart.data.labels.shift();
+      myChart.data.datasets[0].data[len-1] = val;
+      myChart.data.labels[len-1] = h+":"+m+":"+s;
+      myChart.update();
+    }
+    else{
+      myChart.data.datasets[0].data[len] = val;
+      myChart.data.labels[len] = h+":"+m+":"+s;
+      myChart.update();
+    }
+    
   }
       
   
