@@ -9,20 +9,26 @@
     };
     firebase.initializeApp(config);
     
-    var val;
+    var val = 0;
     var ref = firebase.database().ref().child("Dust Density");
 
     ref.on("value", function(snapshot) {
-        val = snapshot.val()
-        console.log(val)
-        
+        val = snapshot.val()*-100;
+
+        console.log(val);
         progress(val);
     }, function (error) {
     console.log("Error: " + error.code);
     });
-
-    
-    
+    var int = 0
+    setInterval(update, 1000);
+    function update(){ 
+      val+=1;
+      progress(val);
+      console.log(val);
+      updateReport(val);
+    }
+    var myChart;
     try {
 
         // Recent Report 2
@@ -31,7 +37,7 @@
         const brandProduct2 = 'rgba(0,181,233,0.2)'
         const brandService2 = 'rgba(0,173,95,0.2)'
     
-        var data3 = [52, 60, 55, 50, 65, 80, 57, 70, 105, 115]
+        var data3 = []
        
     
         var ctx = document.getElementById("recent-rep2-chart");
@@ -40,7 +46,7 @@
           var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', ''],
+              labels: [],
               datasets: [
                 {
                   label: 'Dust Level',
@@ -115,17 +121,27 @@
       } catch (error) {
         console.log(error);
       }
+  function updateReport(val){
+    var len = myChart.data.datasets[0].data.length
+    myChart.data.datasets[0].data[len] = val;
+    myChart.data.labels[len] = "New";
+    myChart.update();
+  }
       
+  
 
 //Dust Level
-   function progress(val){
+  function progress(val){
     try {
+        if(val > 100){
+          val = 100;
+        }
         var progressbarSimple = $('.js-progressbar-simple');
         progressbarSimple.each(function () {
           var that = $(this);
           var executed = false;
          
-          $("#dustLevel").attr("data-transitiongoal", val*-100);
+          $("#dustLevel").attr("data-transitiongoal", val);
             that.waypoint(function () {
               if (!executed) {
                 executed = true;
