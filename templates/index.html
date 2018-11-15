@@ -5,9 +5,6 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
     <title>Amihan Dashboard</title>
@@ -527,33 +524,9 @@
                                     <h3 class="title-3">Contaminants</h3>
                                     <div class="au-skill-container">
                                         <div class="au-progress">
-                                            <span class="au-progress__title">PM1</span>
+                                            <span class="au-progress__title">DUST LEVEL</span><br><br>
                                             <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="90">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">PM2</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="85">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">PM2.5</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="95">
-                                                    <span class="au-progress__value js-value"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="au-progress">
-                                            <span class="au-progress__title">Poisonous Gases</span>
-                                            <div class="au-progress__bar">
-                                                <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="95">
+                                                <div id="dustLevel" class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="90">
                                                     <span class="au-progress__value js-value"></span>
                                                 </div>
                                             </div>
@@ -867,6 +840,10 @@
 
     <!-- Main JS-->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script src="{% static 'js/firebase.js' %}"></script>
 
 </body>
 
