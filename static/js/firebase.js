@@ -29,6 +29,21 @@ console.log("Error: " + error.code);
 });
 var int = 0
 
+setInterval(update, 1000);
+    function update(){ 
+      val+=Math.random() * (100+0) +0;
+      if(val > 100){
+        val-=100;
+      } 
+      if(capture == true){
+        table.push([h+":"+m+":"+s,val])
+      }
+      progress(val);
+      console.log(val);
+      updateReport(val);
+    }
+
+
 var myChart;
 try {
 
@@ -203,7 +218,17 @@ else if(value == "Stop"){
   $(this).prepend("<i id='capture_icon' class='zmdi zmdi-stop'></i>");
   $("#capture_icon").attr("class","zmdi zmdi-archive");
   capture = false;
-  alert(table);
+  console.log(table);
+  $.ajax({
+    url: "reports/",
+    type: "POST",
+    data: { 'data_report[]': table,
+            csrfmiddlewaretoken: window.CSRF_TOKEN },
+    success: function(){
+      alert("Capture Success!");
+    }
+  });
+  table = [];
 }
 
 });

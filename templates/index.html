@@ -32,7 +32,7 @@
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
 
 </head>
-
+{% csrf_token %}
 <body class="animsition">
     <div class="page-wrapper">
         <!-- MENU SIDEBAR-->
@@ -459,7 +459,7 @@
                                         </ul>
                                     </div>
                                     
-                                    <button id="capture_excel" class="au-btn au-btn-icon au-btn--green" style="width:18%" data-value="Capture Data">
+                                    <button id="capture_excel" class="au-btn au-btn-icon au-btn--green" data-value="Capture Data">
                                         <i id="capture_icon" class="zmdi zmdi-archive"></i>Capture Data</button>
                                 </div>
                             </div>
@@ -836,6 +836,7 @@
 
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
     <script src="{% static 'js/firebase.js' %}"></script>
 
 </body>
