@@ -19,7 +19,6 @@ def index(request):
 def reports(request):
     if request.method == "POST":
         data = request.POST.getlist('data_report[]')
-        print(type(data))
         fn = "hii"
 
         if fn != '':
@@ -54,8 +53,11 @@ def reports(request):
 
         for item in data:
             col = 0         
-            worksheet.write(row,col,item)
+            splitted = item.split(',')
+            print(splitted)
+            worksheet.write(row,col,splitted[0])
             col += 1
+            worksheet.write(row,col,splitted[1])
             row += 1
 
         workbook.close()
