@@ -18,11 +18,12 @@ var ref = firebase.database().ref().child("Dust Density");
 var stopping = false;
 var table = [];
 ref.on("value", function(snapshot) {
-    val = snapshot.val();
+    val = snapshot.val()*100;
+    console.log(val);
     progress(val);
     updateReport(val);
     if(capture == true){
-      table.push([val,h+":"+m+":"+s])
+      table.push([h+":"+m+":"+s,val])
     }
 }, function (error) {
 console.log("Error: " + error.code);
@@ -218,21 +219,45 @@ else if(value == "Stop"){
   $(this).prepend("<i id='capture_icon' class='zmdi zmdi-stop'></i>");
   $("#capture_icon").attr("class","zmdi zmdi-archive");
   capture = false;
-  console.log(table);
-  $.ajax({
-    url: "reports/",
-    type: "POST",
-    data: { 'data_report[]': table,
-            csrfmiddlewaretoken: window.CSRF_TOKEN },
-    success: function(){
-      alert("Capture Success!");
-    }
-  });
+  // $.ajax({
+  //   url: "reports/",
+  //   type: "POST",
+  //   data: { 'data_report[]': table,
+  //           csrfmiddlewaretoken: window.CSRF_TOKEN },
+  //   success: function(){
+  //     alert("Capture Success!");
+  //   }
+  // });
+  var dataJson = JSON.stringify({'data':table});
+  var data = {'data_report': dataJson,
+               csrfmiddlewaretoken: window.CSRF_TOKEN};
+  console.log(data);
+  post(data);
   table = [];
 }
 
 });
+function post(params) {
+  // The rest of this code assumes you are not using a library.
+  // It can be made less wordy if you use one.
+  var form = document.createElement("form");
+  form.setAttribute("method", "POST");
+  form.setAttribute("action", "reports/");
 
+  for(var key in params) {
+      if(params.hasOwnProperty(key)) {
+          var hiddenField = document.createElement("input");
+          hiddenField.setAttribute("type", "hidden");
+          hiddenField.setAttribute("name", key);
+          hiddenField.setAttribute("value", params[key]);
+
+          form.appendChild(hiddenField);
+      }
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}
     
   
 

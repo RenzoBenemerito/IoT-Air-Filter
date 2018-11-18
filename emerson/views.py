@@ -9,8 +9,9 @@ from django.contrib import messages
 import xlsxwriter
 import os
 from django.conf import settings
-from django.http import HttpResponse
-from PyQt5.QtWidgets import QFileDialog
+from django.http import HttpResponse, StreamingHttpResponse
+import json
+from io import BytesIO
 
 def index(request):
     return render(request, 'index.html')
@@ -18,17 +19,19 @@ def index(request):
 
 def reports(request):
     if request.method == "POST":
-        data = request.POST.getlist('data_report[]')
-        fn = "hii"
+        
+        output = BytesIO()
 
-        if fn != '':
-            
-            fn += ".xlsx"    
-
+        
+        
+        #data = request.POST.getlist('data')
+        data = request.POST['data_report'] 
+        
+        data = json.loads(data)
+        data = data['data']
         header_list = ['Time', 'Dust Level']
-
         # Create a workbook and add a worksheet.
-        workbook = xlsxwriter.Workbook(fn)
+        workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet()
 
         # These are samples of a row and column data
@@ -52,14 +55,20 @@ def reports(request):
         col = 0
 
         for item in data:
-            col = 0         
-            splitted = item.split(',')
-            print(splitted)
-            worksheet.write(row,col,splitted[0])
-            col += 1
-            worksheet.write(row,col,splitted[1])
+            col = 0
+            for column in item:
+                worksheet.write(row,col,column)
+                col += 1
             row += 1
 
         workbook.close()
-    return HttpResponse('Success')
+        output.seek(0)
+        response = StreamingHttpResponse(
+            output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
+
+
+        
+    return response
     
