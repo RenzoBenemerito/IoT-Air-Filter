@@ -10,7 +10,7 @@ import xlsxwriter
 import os
 from django.conf import settings
 from django.http import HttpResponse
-from PyQt5.QtWidgets import QFileDialog
+
 
 def index(request):
     return render(request, 'index.html')
@@ -19,6 +19,7 @@ def index(request):
 def reports(request):
     if request.method == "POST":
         data = request.POST.getlist('data_report[]')
+        print(data)
         fn = "hii"
 
         if fn != '':
@@ -61,5 +62,6 @@ def reports(request):
             row += 1
 
         workbook.close()
+        
     return HttpResponse('Success')
     
