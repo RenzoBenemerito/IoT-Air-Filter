@@ -32,7 +32,7 @@
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
 
 </head>
-
+{% csrf_token %}
 <body class="animsition">
     <div class="page-wrapper">
         <!-- MENU SIDEBAR-->
@@ -458,8 +458,9 @@
                                             <li class="list-inline-item">Dashboard</li>
                                         </ul>
                                     </div>
-                                    <button class="au-btn au-btn-icon au-btn--green">
-                                        <i class="zmdi zmdi-plus"></i>add item</button>
+                                    
+                                    <button id="capture_excel" class="au-btn au-btn-icon au-btn--green" data-value="Capture Data">
+                                        <i id="capture_icon" class="zmdi zmdi-archive"></i>Capture Data</button>
                                 </div>
                             </div>
                         </div>
@@ -502,14 +503,6 @@
                                                 </select>
                                                 <div class="dropDownSelect2"></div>
                                             </div> -->
-                                            <div class="rs-select2--dark rs-select2--sm">
-                                                <select class="js-select2 au-select-dark" name="time">
-                                                    <option selected="selected">All Time</option>
-                                                    <option value="">By Month</option>
-                                                    <option value="">By Day</option>
-                                                </select>
-                                                <div class="dropDownSelect2"></div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="recent-report__chart">
@@ -843,6 +836,7 @@
 
     <!-- firebase -->
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
     <script src="{% static 'js/firebase.js' %}"></script>
 
 </body>
