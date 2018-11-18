@@ -13,6 +13,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 import json
 from io import BytesIO
 
+
 def index(request):
     return render(request, 'index.html')
 
