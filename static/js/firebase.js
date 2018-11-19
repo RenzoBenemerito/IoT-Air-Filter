@@ -23,6 +23,10 @@ ref.on("value", function(snapshot) {
     progress(val);
     updateReport(val);
     if(capture == true){
+      d = new Date(); // for now
+      h = d.getHours(); // => 9
+      m = d.getMinutes(); // =>  30
+      s = d.getSeconds(); // => 51
       table.push([h+":"+m+":"+s,val])
     }
 }, function (error) {
@@ -30,19 +34,23 @@ console.log("Error: " + error.code);
 });
 var int = 0
 
-setInterval(update, 1000);
-    function update(){ 
-      val+=Math.random() * (100+0) +0;
-      if(val > 100){
-        val-=100;
-      } 
-      if(capture == true){
-        table.push([h+":"+m+":"+s,val])
-      }
-      progress(val);
-      console.log(val);
-      updateReport(val);
-    }
+// setInterval(update, 1000);
+//     function update(){ 
+//       val+=Math.random() * (100+0) +0;
+//       if(val > 100){
+//         val-=100;
+//       } 
+//       if(capture == true){
+//         d = new Date(); // for now
+//         h = d.getHours(); // => 9
+//         m = d.getMinutes(); // =>  30
+//         s = d.getSeconds(); // => 51
+//         table.push([h+":"+m+":"+s,val])
+//       }
+//       progress(val);
+//       console.log(val);
+//       updateReport(val);
+//     }
 
 
 var myChart;
